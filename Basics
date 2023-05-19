@@ -1,0 +1,2 @@
+psql --help
+This shows the arguments that can be passed with psql.
