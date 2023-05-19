@@ -1,2 +1,227 @@
 psql --help
 This shows the arguments that can be passed with psql.
+
+psql -is the command by which we enter to the sql shell.
+
+
+
+--Creating database--
+CREATE DATABASE databasename;
+
+\c databasename -used to select database
+
+--Deleting database--
+DROP DATABASE databasename;
+
+--Creating table--
+--Without any Constraint--
+CREATE TABLE emplyoee(
+        id int, 
+        first_name VARCHAR(20),
+        last_name VARCHAR(20),
+        gender VARCHAR(6),
+        date_of_birth DATE);
+        
+\d-
+          List of relations
+ Schema |   Name   | Type  |  Owner   
+--------+----------+-------+----------
+ public | emplyoee | table | postgres
+(1 row)
+
+\d emplyoee 
+                        Table "public.emplyoee"
+    Column     |         Type          | Collation | Nullable | Default 
+---------------+-----------------------+-----------+----------+---------
+ id            | integer               |           |          | 
+ first_name    | character varying(20) |           |          | 
+ last_name     | character varying(20) |           |          | 
+ gender        | character varying(6)  |           |          | 
+ date_of_birth | date                  |           |          | 
+ 
+ 
+--Creating table--
+--With Some Constaraint--
+CREATE TABLE person(
+        id BIGSERIAL NOT NULL PRIMARY KEY,
+        first_name VARCHAR(50) NOT NULL,
+        last_name VARCHAR(50) NOT NULL,
+        gender VARCHAR(7) NOT NULL,
+        date_of_birth DATE NOT NULL,
+        email VARCHAR(150));
+\d person
+                                       Table "public.person"
+    Column     |          Type          | Collation | Nullable |              Default               
+---------------+------------------------+-----------+----------+------------------------------------
+ id            | bigint                 |           | not null | nextval('person_id_seq'::regclass)
+ first_name     | character varying(50)  |           | not null | 
+ last_name     | character varying(50)  |           | not null | 
+ gender        | character varying(7)   |           | not null | 
+ date_of_birth | date                   |           | not null | 
+ email         | character varying(150) |           |          | 
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+
+--INSERT INTO--
+mydatabase=# INSERT INTO person(first_name,last_name,gender,date_of_birth)
+VALUES ('Sourav','Mohanty','MALE',date '2000-06-26');
+INSERT 0 1
+mydatabase=# INSERT INTO person(first_name,last_name,gender,date_of_birth)
+VALUES ('Bivab','Das','MALE',date '1995-04-15');
+INSERT 0 1
+mydatabase=# INSERT INTO person(first_name,last_name,gender,date_of_birth)
+VALUES ('Jasmin','Jena','FEMALE',date '1997-03-20');
+INSERT 0 1
+--Display the Table--
+SELECT * FROM person;
+ id | first_name | last_name | gender | date_of_birth | email 
+----+------------+-----------+--------+---------------+-------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    | 
+(3 rows)
+--Adding one more row--
+INSERT INTO person(first_name,last_name,gender,date_of_birth,email)
+VALUES ('Akash','Saha','MALE',date '1999-05-12','akashsaha12@gmail.com');
+ id | first_name | last_name | gender | date_of_birth |         email         
+----+------------+-----------+--------+---------------+-----------------------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com
+(4 rows)
+--Annding a column to the table--
+ALTER TABLE person ADD COLUMN country_of_birth varchar(30);
+\d person-
+                                         Table "public.person"
+      Column      |          Type          | Collation | Nullable |              Default               
+------------------+------------------------+-----------+----------+------------------------------------
+ id               | bigint                 |           | not null | nextval('person_id_seq'::regclass)
+ first_name       | character varying(50)  |           | not null | 
+ last_name        | character varying(50)  |           | not null | 
+ gender           | character varying(7)   |           | not null | 
+ date_of_birth    | date                   |           | not null | 
+ email            | character varying(150) |           |          | 
+ country_of_birth | character varying(30)  |           |          | 
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+--After adding some random values into the database using "mockaroo"--
+id  | first_name  |     last_name      | gender  | date_of_birth |                  email                  |    country_of_birth    
+-----+-------------+--------------------+---------+---------------+-----------------------------------------+------------------------
+   1 | Sourav      | Mohanty            | MALE    | 2000-06-26    |                                         | 
+   2 | Bivab       | Das                | MALE    | 1995-04-15    |                                         | 
+   3 | Jasmin      | Jena               | FEMALE  | 1997-03-20    |                                         | 
+   4 | Akash       | Saha               | MALE    | 1999-05-12    | akashsaha12@gmail.com                   | 
+   5 | Tallia      | Brellin            | Female  | 2022-10-15    | tbrellin0@people.com.cn                 | Poland
+   6 | Redford     | Gallyon            | Male    | 2022-12-01    | rgallyon1@flickr.com                    | Bahamas
+   7 | Fifi        | Pounds             | Female  | 2023-03-22    | fpounds2@forbes.com                     | Jamaica
+   8 | Florance    | Keaton             | Female  | 2022-10-29    | fkeaton3@china.com.cn                   | Czech Republic
+   9 | Antonius    | Kobiela            | Male    | 2023-02-10    | akobiela4@smugmug.com                   | Nigeria
+  10 | Obadias     | Hartford           | Male    | 2022-05-28    | ohartford5@yale.edu                     | China
+  11 | Hallsy      | Wanklyn            | Male    | 2022-10-17    | hwanklyn7@wix.com                       | Russia
+  12 | Danie       | Fick               | Male    | 2022-06-13    | dfick8@naver.com                        | Israel
+  13 | Cyndy       | Goshawk            | Female  | 2023-01-07    | cgoshawk9@vkontakte.ru                  | Yemen
+  14 | Stanislaw   | Crates             | Male    | 2022-05-23    | scratesb@tamu.edu                       | China
+  15 | Ferdinand   | Terzo              | Male    | 2022-12-28    | fterzoc@jalbum.net                      | China
+  16 | Farley      | Looby              | Male    | 2022-07-03    | floobyd@a8.net                          | Argentina
+  17 | Zechariah   | Salle              | Male    | 2022-12-23    | zsallee@hhs.gov                         | Netherlands
+  18 | Alonso      | Kidstone           | Male    | 2022-10-11    | akidstonef@msn.com                      | Argentina
+  19 | Alyss       | Sedgefield         | Female  | 2023-04-17    | asedgefieldg@ebay.co.uk                 | China
+  20 | Emmye       | Gavey              | Female  | 2023-04-23    | egaveyh@meetup.com                      | China
+  21 | Dorine      | Mewburn            | Female  | 2023-03-09    | dmewburni@businesswire.com              | Albania
+  22 | Garth       | Dexter             | Male    | 2022-11-08    | gdexterj@tinypic.com                    | Thailand
+  23 | Blaine      | Draisey            | Male    | 2023-04-27    | bdraiseyk@imageshack.us                 | Russia
+  24 | Garrek      | Tolefree           | Male    | 2023-02-25    | gtolefreel@stanford.edu                 | Indonesia
+  
+--DELETE ROWS--
+DELETE FROM person WHERE id>10;
+DELETE 14
+SELECT * FROM person;
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    |                         | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    |                         | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                         | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com   | 
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+  6 | Redford    | Gallyon   | Male   | 2022-12-01    | rgallyon1@flickr.com    | Bahamas
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com     | Jamaica
+  8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn   | Czech Republic
+  9 | Antonius   | Kobiela   | Male   | 2023-02-10    | akobiela4@smugmug.com   | Nigeria
+ 10 | Obadias    | Hartford  | Male   | 2022-05-28    | ohartford5@yale.edu     | China
+(10 rows)
+
+
+
+--SELECT FROM--
+
+SELECT first_name FROM person;
+ first_name 
+------------
+ Sourav
+ Bivab
+ Jasmin
+ Akash
+ Tallia
+ Redford
+ Fifi
+ Florance
+ Antonius
+ Obadias
+(10 rows)
+
+SELECT first_name,gender FROM person;
+ first_name | gender 
+------------+--------
+ Sourav     | MALE
+ Bivab      | MALE
+ Jasmin     | FEMALE
+ Akash      | MALE
+ Tallia     | Female
+ Redford    | Male
+ Fifi       | Female
+ Florance   | Female
+ Antonius   | Male
+ Obadias    | Male
+(10 rows)
+
+--ORDER BY--
+ASC-ascending order.
+DESC-descending order.
+SELECT * FROM person ORDER BY country_of_birth;--When we dont specify the order by default it is ascending--
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  6 | Redford    | Gallyon   | Male   | 2022-12-01    | rgallyon1@flickr.com    | Bahamas
+ 10 | Obadias    | Hartford  | Male   | 2022-05-28    | ohartford5@yale.edu     | China
+  8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn   | Czech Republic
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com     | Jamaica
+  9 | Antonius   | Kobiela   | Male   | 2023-02-10    | akobiela4@smugmug.com   | Nigeria
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    |                         | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com   | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    |                         | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                         | 
+(10 rows)
+
+--DISTINCT--
+As we don't have any duplicate value in our table we will not inspect the DISTINCT keyword
+This keyword just remove the repetative elements from the view and show us only the unique elements.
+SELECT DISTINCT .......
+
+--WHERE clause and AND--
+SeLECT * FROM person WHERE gender= 'Female';
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com     | Jamaica
+  8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn   | Czech Republic
+
+SeLECT * FROM person WHERE gender= 'Female' or gender='FEMALE';
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                         | 
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com     | Jamaica
+  8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn   | Czech Republic
+(4 rows)
+
