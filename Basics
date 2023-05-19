@@ -225,3 +225,78 @@ SeLECT * FROM person WHERE gender= 'Female' or gender='FEMALE';
   8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn   | Czech Republic
 (4 rows)
 
+--Comparison Operators--
+
+= equals
+<=lessthan equals
+>=greaterthan equals
+<> not equals
+
+--lIMIT KEYWORD--
+SELECT * FROM person LIMIT 5;
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    |                         | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    |                         | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                         | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com   | 
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+(5 rows)
+
+SELECT * FROM person OFFSET 5 LIMIT 5;
+ id | first_name | last_name | gender | date_of_birth |         email         | country_of_birth 
+----+------------+-----------+--------+---------------+-----------------------+------------------
+  6 | Redford    | Gallyon   | Male   | 2022-12-01    | rgallyon1@flickr.com  | Bahamas
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com   | Jamaica
+  8 | Florance   | Keaton    | Female | 2022-10-29    | fkeaton3@china.com.cn | Czech Republic
+  9 | Antonius   | Kobiela   | Male   | 2023-02-10    | akobiela4@smugmug.com | Nigeria
+ 10 | Obadias    | Hartford  | Male   | 2022-05-28    | ohartford5@yale.edu   | China
+(5 rows)
+
+--FETCH KEYWORD--
+SELECT * FROM person FETCH 5;
+                                   
+SELECT * FROM person FETCH FIRST 5 ROW ONLY;
+ id | first_name | last_name | gender | date_of_birth |          email          | country_of_birth 
+----+------------+-----------+--------+---------------+-------------------------+------------------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    |                         | 
+  2 | Bivab      | Das       | MALE   | 1995-04-15    |                         | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                         | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com   | 
+  5 | Tallia     | Brellin   | Female | 2022-10-15    | tbrellin0@people.com.cn | Poland
+(5 rows)
+
+--IN KEYWORD--
+SELECT * FROM person WHERE country_of_birth IN('China','Jamaica');
+ id | first_name | last_name | gender | date_of_birth |        email        | country_of_birth 
+----+------------+-----------+--------+---------------+---------------------+------------------
+  7 | Fifi       | Pounds    | Female | 2023-03-22    | fpounds2@forbes.com | Jamaica
+ 10 | Obadias    | Hartford  | Male   | 2022-05-28    | ohartford5@yale.edu | China
+(2 rows)
+
+--BETWEEN kEYWORD--
+SELECT * FROM person WHERE date_of_birth BETWEEN '1997-01-01' AND '2001-01-01';
+ id | first_name | last_name | gender | date_of_birth |         email         | country_of_birth 
+----+------------+-----------+--------+---------------+-----------------------+------------------
+  1 | Sourav     | Mohanty   | MALE   | 2000-06-26    |                       | 
+  3 | Jasmin     | Jena      | FEMALE | 1997-03-20    |                       | 
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com | 
+(3 rows)
+
+--LIKE and ILIKE--
+%-any number of character.
+_-only one character.
+SELECT * FROM person WHERE email LIKE '%gmail.com';
+ id | first_name | last_name | gender | date_of_birth |         email         | country_of_birth 
+----+------------+-----------+--------+---------------+-----------------------+------------------
+  4 | Akash      | Saha      | MALE   | 1999-05-12    | akashsaha12@gmail.com | 
+(1 row)
+ILIKE keyword ignore the case of the letter.
+
+--GROUP BY--
+This keyword groups the element which have same attributes.
+
+--GROUP BY HAVING--
+It is used to put a condition after GROUP BY.
+
+--AGGREGATE FUNCTION--
