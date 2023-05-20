@@ -300,3 +300,103 @@ This keyword groups the element which have same attributes.
 It is used to put a condition after GROUP BY.
 
 --AGGREGATE FUNCTION--
+
+--CREATING ANOTHER TABLE car--
+create table car (
+	id INT,
+	make VARCHAR(50),
+	model VARCHAR(50),
+	price VARCHAR(50)
+);
+insert into car (id, make, model, price) values (1, 'Dodge', 'Dakota', '$71047.31');
+insert into car (id, make, model, price) values (2, 'Land Rover', 'Range Rover', '$55113.73');
+insert into car (id, make, model, price) values (3, 'Volkswagen', 'Golf', '$42057.08');
+insert into car (id, make, model, price) values (4, 'Buick', 'Regal', '$85323.86');
+insert into car (id, make, model, price) values (5, 'Dodge', 'Stratus', '$15285.79');
+insert into car (id, make, model, price) values (6, 'Lexus', 'ES', '$96354.48');
+insert into car (id, make, model, price) values (7, 'Chevrolet', '2500', '$98591.79');
+insert into car (id, make, model, price) values (8, 'Kia', 'Sportage', '$52783.05');
+insert into car (id, make, model, price) values (9, 'Chevrolet', 'Equinox', '$92732.57');
+insert into car (id, make, model, price) values (10, 'BMW', '3 Series', '$60886.52');
+insert into car (id, make, model, price) values (11, 'Saturn', 'Ion', '$80482.95');
+insert into car (id, make, model, price) values (12, 'Bentley', 'Continental GT', '$95782.91');
+...Some more values
+--CALCULATING MIN,MAX,AVG--
+
+SELECT MAX(price) FROM car;
+    max    
+-----------
+ $99934.09
+(1 row)
+
+SELECT MIN(price) FROM car;
+    min    
+-----------
+ $10030.67
+(1 row)
+--ARITHMATIC OPERATION--
+SELECT 10+2;
+ ?column? 
+----------
+       12
+(1 row)
+
+SELECT 10-5;
+ ?column? 
+----------
+        5
+(1 row)
+
+SELECT 10*5;
+ ?column? 
+----------
+       50
+(1 row)
+
+SELECT 10/5;
+ ?column? 
+----------
+        2
+(1 row)
+
+SELECT 10^5;
+ ?column? 
+----------
+   100000
+(1 row)
+
+SELECT 10!;
+ ?column? 
+----------
+  3628800
+(1 row)
+
+SELECT 10%4;
+ ?column? 
+----------
+        2
+(1 row)
+
+--ALIAS--
+We can change the column name.
+
+--COALESCE--
+SELECT COALESCE(email,'email not provided') FROM person;
+        coalesce         
+-------------------------
+ email not provided
+ email not provided
+ email not provided
+ akashsaha12@gmail.com
+ tbrellin0@people.com.cn
+ rgallyon1@flickr.com
+ fpounds2@forbes.com
+ fkeaton3@china.com.cn
+ akobiela4@smugmug.com
+ ohartford5@yale.edu
+(10 rows)
+--NULL IF--
+SELECT 10/0;-Will through an error.
+SELECT 10/NULLIF(0,0);
+
+--Timestamp and Date--
